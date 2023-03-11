@@ -1,14 +1,29 @@
-import os
-from flask import send_from_directory
-from flask import Flask
+from flask import Flask, render_template
 app = Flask(__name__)
 
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+posts = [
+    {
+        'author': 'Solomon Eniola',
+        'title': 'Blog Post 1',
+        'content': 'First post content',
+        'date_posted': 'April 20, 2018',
+},
+{
+        'author': 'Solomon Damilare',
+        'title': 'Blog Post 2',
+        'content': 'Second post content',
+        'date_posted': 'April 21, 2018'
+}
+]
+
 @app.route("/")
-def hello():
-    return "<h1>Home Page</h1>"
+@app.route("/home")
+def home():
+    return render_template('home.html', posts=posts)
+
+@app.route("/about")
+def about():
+    return render_template('about.html', title='about')
 
 
 if __name__ == '__main__':
